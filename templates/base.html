@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <!-- FIX 1: Corrected the filename from 'style1.css' to 'style.css' -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename = 'style.css') }}"
+    />
+
+    <!-- FIX 3: Added Font Awesome for icons. This is necessary for the icons to appear. -->
+    <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+  </head>
+  <body>
+    <header class="site-header">
+        <div class="logo">
+            <i class="fas fa-newspaper logo-icon"></i>
+            <span class="logo-text">HNews</span>
+        </div>
+
+        <div class="nav-container">
+            <nav class="header-nav">
+                <a href="/?query=Politics" class="active">Politics</a>
+                <a href="/?query=Game">Games</a>
+                <a href="/?query=Business">Business</a>
+                <a href="/?query=Sport">Sports</a>
+                <a href="/?query=Technology">Tech</a>
+            </nav>
+            <button class="darkmode-button">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Stay Informed with the Latest News</h1>
+        <p>Explore our comprehensive coverage of politics, business, technology, sports, and entertainment. Your trusted source for timely and accurate information.</p>
+        
+        <!-- FIX 2: Changed the search div to a proper <form> element for functionality. -->
+        <!-- Added a 'name' attribute to the input so the data can be submitted. -->
+        <form class="search" action="/" method="get">
+            <input type="text" name="query" placeholder="Search for news...">
+            <button type="submit"><i class="fas fa-search"></i> Search</button>
+        </form>
+    </section>
+
+    <div class="news-container">
+        {% for article in articles %}
+        <div class="news-card">
+            <div class="card-image">
+                <img src="{{ article.urlToImage }}" alt="{{ article.title }}">
+            </div>
+            <div class="card-text">
+                {% if article.category %}
+                <span class="category-tag">{{ article.category }}</span>
+                {% endif %}
+                <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                <p>{{ article.description }}</p>
+                <div class="card-meta">
+                    <div class="author">
+                        {% if article.authorImage %}
+                        <img src="{{ article.authorImage }}" alt="{{ article.author }}">
+                        {% endif %}
+                        <span>{{ article.author }}</span>
+                    </div>
+                    <span>{{ article.publishedAt }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">David's News</div>
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Careers</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="copyright">© 2025 David's News. All rights reserved.</div>
+        </div>
+    </footer>
+    
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.site-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Set active link based on URL query
+        const currentQuery = new URLSearchParams(window.location.search).get('query') || 'Politics';
+        const navLinks = document.querySelectorAll('.header-nav a');
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.textContent.trim().toLowerCase() === currentQuery.toLowerCase()) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Dark mode toggle
+        const darkModeBtn = document.querySelector('.darkmode-button');
+        const body = document.body;
+        const icon = darkModeBtn.querySelector('i');
+
+        darkModeBtn.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            
+            // Toggle icon based on dark-mode class
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-circle-half-stroke');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-circle-half-stroke');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+/* ------------- Header cố định + blur ------------- */
+
+:root {
+  --primary-color: #1c77c3;
+  --secondary-color: #40bcd8;
+}
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 30px;
+  /* nền trắng mờ, cho phép blur nội dung phía sau */
+  background: rgba(255, 255, 255, 0.536);
+  backdrop-filter: blur(25px);
+  /* đảm bảo header nằm trên cùng */
+  z-index: 1000;
+  /* nếu muốn, thêm shadow mờ cho viền dưới */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Đẩy nội dung chính xuống, tránh bị che */
+body {
+  padding-top: 80px;
+  font-family: "Open Sans";
+}
+
+/* Nếu thích, điều chỉnh lại vị trí logo cho cân đối */
+.site-header .logo {
+  position: relative;
+  left: 60px;
+  top: 30px;
+}
+
+.logo {
+  font-size: 30px;
+  color: var(--primary-color);
+  font-weight: bold;
+  position: relative;
+  left: 60px;
+  top: 22px;
+}
+.header {
+  text-align: center;
+}
+
+.header a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  margin: 5px 20px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+.header a:hover {
+  transform: scale(1.2);
+}
+.hr {
+  width: 90%;
+  margin-top: 10px;
+}
+.hello {
+  text-align: center;
+  margin-top: 50px;
+}
+.search {
+  text-align: center;
+  margin-bottom: 50px;
+  width: fit-content;
+  margin: 0 auto 50px auto;
+  border-radius: 30px 30px 30px 30px;
+}
+
+.search input {
+  border-radius: 30px 0px 0px 30px;
+  border: none;
+  padding: 15px;
+  width: 250px;
+  margin: 0px;
+  box-shadow: 0 5px 5px  rgb(176, 176, 176);
+  transition: all 0.3s ease;
+}
+.search input:active {
+  box-shadow: 0 0 10px var(--secondary-color);
+  border: none;
+}
+.search button {
+  border: none;
+  /* --secondary-color: #65cae0; */
+  box-shadow: 0 5px 5px #73c6d8;
+
+  border-radius: 0px 30px 30px 0px;
+  padding: 15px;
+  background-color: var(--secondary-color);
+  color: white;
+  margin: 0px;
+}
+/* Masonry container với class cũ */
+.news-container {
+  column-count: 2; /* Số cột muốn hiển thị */
+  column-gap: 20px; /* Khoảng cách giữa các cột */
+  width: 70%;
+  margin: 0 auto;
+}
+
+/* Mỗi “viên gạch” */
+.news-card {
+  break-inside: avoid; /* Không để bị ngắt giữa chừng khi xếp columns */
+  background: white;
+  margin-bottom: 20px; /* Khoảng cách dọc giữa các item */
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.184);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Ảnh luôn full-width trong từng card */
+.news-card img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.news-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px var(--secondary-color);
+}
+.news-card:hover img {
+  transform: scale(1.08);
+}
+
+/* Phần text padding */
+.card-text {
+  padding: 15px 20px;
+}
+
+/* Tiêu đề và đoạn văn */
+.card-text a {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  text-decoration: none;
+  word-wrap: break-word;
+}
+
+.card-text p {
+  font-size: 16px;
+  color: #333;
+  word-wrap: break-word;
+}
+
+/* Responsive: 2 cột trên tablet, 1 cột trên mobile (tuỳ chọn) */
+@media (max-width: 992px) {
+  .news-container {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .news-container {
+    column-count: 1;
+  }
+}
